@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
+    <ion-title>Registrarse</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (submit)="onSubmit()">
+  <form (submit)="onRegister()">
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
       <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
@@ -17,9 +17,7 @@
     </ion-item>
 
     <ion-button expand="block" type="submit" [disabled]="!email || !password">
-      Iniciar Sesión
+      Registrarse
     </ion-button>
-    <ion-button expand="block" fill="clear" color="primary" (click)="goToRegister()">
-      Crear una cuenta
   </form>
 </ion-content>

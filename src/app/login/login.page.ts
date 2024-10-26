@@ -9,8 +9,8 @@ import { NavController } from '@ionic/angular';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  
 
-  constructor(private navCtrl: NavController) {}
 
   onSubmit() {
     // logica de autenticacion
@@ -19,5 +19,8 @@ export class LoginPage {
 
     // redireccion si la autenticacion esta bien
     this.navCtrl.navigateForward('/tabs');
+  }
+  goToRegister() {
+    this.navCtrl.navigateForward('/register');
   }
 }
