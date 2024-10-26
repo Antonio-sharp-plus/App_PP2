@@ -24,6 +24,9 @@ export class LoginPage {
     // redireccion si la autenticacion esta bien
     this.navCtrl.navigateForward('/tabs');
   }
+  goToRegister() {
+    this.navCtrl.navigateForward('/register');
+  }
 
   goToTab1() {
     this.router.navigate(['/tabs/tab1']);
