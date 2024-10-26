@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,9 @@ export class LoginPage {
   email: string = '';
   password: string = '';
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController,
+    private router: Router
+  ) {}
 
   onSubmit() {
     // logica de autenticacion
@@ -19,5 +22,9 @@ export class LoginPage {
 
     // redireccion si la autenticacion esta bien
     this.navCtrl.navigateForward('/tabs');
+  }
+
+  goToTab1() {
+    this.router.navigate(['/tabs/tab1']);
   }
 }
