@@ -1,11 +1,123 @@
 ion-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  --background: url('/assets/img/fondo-principal.jpg') no-repeat center center / cover fixed;
+}
+
+.contenedor-general{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedor-titulo{
+  padding-top: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 50px;
+}
+.titulo-general{
+  margin-bottom: 0;
+  font-size: 40px;
+  letter-spacing: 5px;
+  color: black;
+}
+.subtitulo{
+  margin-top: 0;
+  font-size: 20px;
+  letter-spacing: 5px;
+  font-weight: 500;
+  color: black
+}
   
-  form {
-    width: 100%;
-    max-width: 400px;
-  }
+
+.contenedor-formulario-login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.tones{
+  --background: #e6e1e1;
+  --color: grey;
+  --border-radius: 25px;
+  margin-inline: 30px;
+  width: 80%;
+}
+.candado{
+color: white;
+margin-right: 11px;
+}
+.mail{
+color: white;
+margin-right:10px;
+}
+
+
+.contenedor-recordar-olvdaste-contrasena{
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin-bottom: 10px;
+}
+.contenedor-checkbox-label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.texto-recordarme{
+  font-size: small;
+  color: #6b402b;
+  font-weight: 500;
+}
+.texto-olvidaste-contrasena{
+  font-size: small;
+  color: #6b402b;
+  font-weight: 500;
+}
+
+.boton-iniciar-sesion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6b402b;
+  color:  #e6e1e1;
+  width: 70%;  
+  height: 50px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: normal;
+}
+.boton-iniciar-sesion:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.texto-no-cuenta{
+  display: flex;
+  justify-content: center;
+  font-size: small;
+  gap: 8px;
+  color: #6b402b;
+  font-weight: 600;
+}
+.texto-ancla{
+  font-size: small;
+  font-weight: 500;
+  text-decoration: underline;
+  color: #6b402b;
+  font-weight: 600;
+}
+
+
+
+
+  // form {
+  //   width: 100%;
+  //   max-width: 400px;
+  // }
   
