@@ -16,9 +16,18 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
-  },  {
+  },
+  {
     path: 'restore-password',
     loadChildren: () => import('./restore-password/restore-password.module').then( m => m.RestorePasswordPageModule)
+  },
+  {
+    path: 'crear-recordatorio',
+    loadChildren: () => import('./crear-recordatorio/crear-recordatorio.module').then( m => m.CrearRecordatorioPageModule)
+  },
+  {
+    path: 'detalles-recordatorio/:idrecordatorio',
+    loadChildren: () => import('./detalles-recordatorio/detalles-recordatorio.module').then( m => m.DetallesRecordatorioPageModule)
   }
 
 ];
