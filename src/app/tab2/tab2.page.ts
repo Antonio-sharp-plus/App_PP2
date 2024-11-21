@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
-
-interface List {
-  name: string;
-  tasks: { name: string; completed: boolean }[];
-  tags: string[];
-}
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -18,16 +13,14 @@ export class Tab2Page implements OnInit {
   newList: string = '';
   newTag: string = '';
 
-  constructor(private storage: Storage, private router: Router) {
-    this.init();
-  }
+  constructor(
+    private router: Router,
+    private storage: Storage,
+    private alertController: AlertController
+  ) {}
 
-  async init() {
+  async ngOnInit() {
     await this.storage.create();
-    this.loadLists();
-  }
-
-  ngOnInit() {
     this.loadLists();
   }
 
@@ -43,12 +36,60 @@ export class Tab2Page implements OnInit {
       this.lists.push({ name: this.newList.trim(), tasks: [], tags: [this.newTag.trim()] });
       await this.storage.set('lists', this.lists);
       this.newList = '';
-      this.newTag = ''; // Limpiar la etiqueta
+      this.newTag = '';
     }
   }
 
   selectList(name: string) {
     this.router.navigate(['/tabs/tab3', name]);
   }
-}
 
+  async editList(index: number, list: { name: string, tasks: { name: string, completed: boolean }[], tags: string[] }) {
+    const alert = await this.alertController.create({
+      header: 'Editar Lista',
+      inputs: [
+        {
+          name: 'listName',
+          type: 'text',
+          placeholder: 'Nombre de la lista',
+          value: list.name
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            if (data.listName.trim().length > 0) {
+              this.lists[index].name = data.listName.trim();
+              this.storage.set('lists', this.lists);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async deleteList(index: number) {
+    this.lists.splice(index, 1);
+    await this.storage.set('lists', this.lists);
+  }
+
+  // Métodos de navegación para otros botones
+  irAListas() {
+    this.router.navigate(['/tabs/tab2']);
+  }
+
+  CerrarSesion() {
+    this.router.navigate(['/tabs/login']);
+  }
+
+  irARecordatorios() {
+    this.router.navigate(['/tabs/tab1']);
+  }
+}
