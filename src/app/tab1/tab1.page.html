@@ -1,9 +1,9 @@
 <ion-menu side="end" contentId="main-content">
   <ion-content class="ion-padding contenido-menu">
-    <button>Recordatorios</button>
-    <button>Listas</button>
+    <button (click)="irARecordatorios()">Recordatorios</button>
+    <button (click)="irAListas()">Listas</button>
     <button>Etiquetas</button>
-    <button>Cerrar sesión</button>
+    <button (click)="CerrarSesion()">Cerrar sesión</button>
   </ion-content>
 </ion-menu>
 
@@ -18,35 +18,26 @@
   </ion-header>
 
   <ion-content class="ion-padding background-contenido">
-    <!-- Hijos que serán centrados -->
     <div class="contenedor-general">
-
       <div class="contenedor-recordatorios">
-        <button class="button-aviso-crear">
+        <button (click)="irACrearRecordatorio()" class="button-aviso-crear">
           ¡Creá tu primer recordatorio!
         </button>
 
-        <div class="contenedor-recordatorio">
-          <div class="d-flex justify-content-center align-items-center flex-column w-100">
-            <p class="titulo-recordatorio">Pantallas PPII</p>
-            <div class="divisor-titulo-recordatorio"></div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
-            <span>¿Cuándo?</span>
-            <span>25/10/2024</span>
-          </div>
-          <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
-            <span>¿Hora?</span>
-            <span>19:00</span>
-          </div>
-          <div class="d-flex justify-content-around align-items-center w-75">
-            <button class="boton-detalles-recordatorio">Detalles</button>
-            <ion-icon name="trash-outline" class="color-icon"></ion-icon>
-          </div>
-        </div>
-
+        <ion-list>
+          <ion-item-sliding *ngFor="let recordatorio of recordatorios; let i = index">
+            <ion-item (click)="verDetalles(recordatorio)">
+              <ion-label>
+                <h2>{{ recordatorio.titulo }}</h2>
+                <p>{{ recordatorio.fecha }} - {{ recordatorio.hora }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="eliminarRecordatorio(i)">Eliminar</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
       </div>
-
     </div>
   </ion-content>
 </div>
