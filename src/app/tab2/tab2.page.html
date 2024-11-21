@@ -13,15 +13,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Funcionalidad de creación de listas con checkbox -->
+  <!-- Funcionalidad de creación de listas con etiquetas -->
   <ion-item>
-    <ion-input [(ngModel)]="newList" placeholder="New List"></ion-input>
-    <ion-button (click)="addList()">Add List</ion-button>
+    <ion-input [(ngModel)]="newList" placeholder="Nueva Lista"></ion-input>
+    <ion-input [(ngModel)]="newTag" placeholder="Etiqueta"></ion-input>
+    <ion-button (click)="addList()">Agregar Lista</ion-button>
   </ion-item>
 
   <ion-list>
     <ion-item *ngFor="let list of lists" (click)="selectList(list.name)">
       <ion-label>{{ list.name }}</ion-label>
+      <ion-badge *ngFor="let tag of list.tags">{{ tag }}</ion-badge>
     </ion-item>
   </ion-list>
 
