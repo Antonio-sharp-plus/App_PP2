@@ -19,4 +19,5 @@ export class DetallesRecordatorioPage implements OnInit {
   irARecordatorios() {
     this.router.navigate(['/tabs/tab1']);
   }
+  
 }
