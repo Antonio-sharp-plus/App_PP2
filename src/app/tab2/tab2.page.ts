@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../services/task.service';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
+
+interface List {
+  name: string;
+  tasks: { name: string; completed: boolean }[];
+  tags: string[];
+}
 
 @Component({
   selector: 'app-tab2',
@@ -8,25 +14,41 @@ import { Router } from '@angular/router';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
-  lists: { name: string, tasks: { name: string, completed: boolean }[] }[] = [];
+  lists: { name: string, tasks: { name: string, completed: boolean }[], tags: string[] }[] = [];
   newList: string = '';
+  newTag: string = '';
 
-  constructor(private taskService: TaskService, private router: Router) {}
-
-  ngOnInit() {
-    this.lists = this.taskService.getLists();
+  constructor(private storage: Storage, private router: Router) {
+    this.init();
   }
 
-  addList() {
+  async init() {
+    await this.storage.create();
+    this.loadLists();
+  }
+
+  ngOnInit() {
+    this.loadLists();
+  }
+
+  async loadLists() {
+    const storedLists = await this.storage.get('lists');
+    if (storedLists) {
+      this.lists = storedLists;
+    }
+  }
+
+  async addList() {
     if (this.newList.trim().length > 0) {
-      this.taskService.addList(this.newList);
+      this.lists.push({ name: this.newList.trim(), tasks: [], tags: [this.newTag.trim()] });
+      await this.storage.set('lists', this.lists);
       this.newList = '';
-      this.lists = this.taskService.getLists();
+      this.newTag = ''; // Limpiar la etiqueta
     }
   }
 
   selectList(name: string) {
     this.router.navigate(['/tabs/tab3', name]);
   }
-  
 }
+

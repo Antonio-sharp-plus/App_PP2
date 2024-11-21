@@ -24,4 +24,8 @@ export class RegisterPage {
       console.error('Error en el registro:', error);
     }
   }
+
+  goToLogin(){
+    this.navCtrl.navigateForward('/login');
+  }
 }
