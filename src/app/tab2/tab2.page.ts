@@ -41,8 +41,7 @@ export class Tab2Page implements OnInit {
   }
 
   selectList(name: string) {
-    console.log('Selected List:', name);
-    // Navegar a la página de detalles o realizar alguna acción con la lista seleccionada.
+    this.router.navigate(['/tabs/tab3', name]);
   }
 
   async editList(index: number, list: { name: string, tasks: { name: string, completed: boolean }[], tags: string[] }) {
