@@ -33,28 +33,28 @@
         <div class="radio-group">
           <p class="titulo-repetir">¿Repetir recordatorio?</p>
           <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="no-repetir">
+            <label class="contenedor-label-radio" for="No Repetir">
               No repetir
             </label>
-            <input type="radio" name="repetir" value="no-repetir" checked id="no-repetir">
+            <input type="radio" name="repetir" value="No Repetir" checked id="No Repetir">
           </div>
           <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="una-semana">
+            <label class="contenedor-label-radio" for="Una Semana">
               1 vez por semana
             </label>
-            <input type="radio" name="repetir" value="una-semana" id="una-semana">
+            <input type="radio" name="repetir" value="Una Semana" id="Una Semana">
           </div>
          <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-mes">
+          <label class="contenedor-label-radio" for="Un Mes">
             1 vez por mes
           </label>
-          <input type="radio" name="repetir" value="un-mes" id="un-mes">
+          <input type="radio" name="repetir" value="Un Mes" id="Un Mes">
          </div>
          <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-ano">
+          <label class="contenedor-label-radio" for="Un Año">
             1 vez por año
           </label>
-          <input type="radio" name="repetir" value="un-ano" id="un-ano">
+          <input type="radio" name="repetir" value="Un Año" id="Un Año">
          </div>
 
         </div>        
@@ -63,7 +63,7 @@
           <button type="submit" class="button-guardar-cancelar">
             Editar
           </button>
-          <button type="button" class="button-guardar-cancelar">
+          <button (click)="irARecordatorios()"type="button" class="button-guardar-cancelar">
             Volver
           </button>
         </div>

@@ -20,6 +20,19 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'crear-recordatorio',
+        loadChildren: () => import('../crear-recordatorio/crear-recordatorio.module').then(m => m.CrearRecordatorioPageModule)
+      },
+      {
+        path: 'detalles-recordatorio',
+        loadChildren: () => import('../detalles-recordatorio/detalles-recordatorio.module').then(m => m.DetallesRecordatorioPageModule),
+      },
+      {
+        path: 'login', 
+        loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule), // Página de Login
+      },
+      
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

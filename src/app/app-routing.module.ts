@@ -28,7 +28,8 @@ const routes: Routes = [
   {
     path: 'detalles-recordatorio/:idrecordatorio',
     loadChildren: () => import('./detalles-recordatorio/detalles-recordatorio.module').then( m => m.DetallesRecordatorioPageModule)
-  }
+  },
+ 
 
 ];
 

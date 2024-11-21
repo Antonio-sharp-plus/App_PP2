@@ -1,9 +1,9 @@
 <ion-menu side="end" contentId="main-content">
   <ion-content class="ion-padding contenido-menu">
-    <button>Recordatorios</button>
-    <button>Listas</button>
+    <button (click)="irACrearRecordatorio()">Menu</button>
+    <button (click)="irAListas()">Listas</button>
     <button>Etiquetas</button>
-    <button>Cerrar sesión</button>
+    <button (click)="CerrarSesion()">Cerrar sesión</button>
   </ion-content>
 </ion-menu>
 
@@ -22,53 +22,27 @@
     <div class="contenedor-general">
       
       <div class="contenedor-recordatorios">
-      <form action="" class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
-        <input type="text" placeholder="Titulo Recordatorio" class="custom-input">
-
+        <form (ngSubmit)="guardarRecordatorio()" class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
+          <input type="text" placeholder="Titulo Recordatorio" class="custom-input" [(ngModel)]="recordatorio.titulo" name="titulo" required>
         
-        <textarea type="text" class="contenedor-input" placeholder="¿Querés añadir un comentario?"></textarea>
-        <input type="date" class="contenedor-input">
-        <input type="time" class="contenedor-input">
+          <textarea class="contenedor-input" placeholder="¿Querés añadir un comentario?" [(ngModel)]="recordatorio.comentario" name="comentario"></textarea>
         
-        <div class="radio-group">
-          <p class="titulo-repetir">¿Repetir recordatorio?</p>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="no-repetir">
-              No repetir
-            </label>
-            <input type="radio" name="repetir" value="no-repetir" checked id="no-repetir">
+          <input type="date" class="contenedor-input" [(ngModel)]="recordatorio.fecha" name="fecha">
+          <input type="time" class="contenedor-input" [(ngModel)]="recordatorio.hora" name="hora">
+        
+          <div class="radio-group">
+            <p class="titulo-repetir">¿Repetir recordatorio?</p>
+            <div *ngFor="let opcion of ['No Repetir', 'Una Semana', 'Un Mes', 'Un Año']">
+              <label [for]="opcion">{{ opcion }}</label>
+              <input type="radio" name="repetir" [id]="opcion" [value]="opcion" [(ngModel)]="recordatorio.repetir">
+            </div>
           </div>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="una-semana">
-              1 vez por semana
-            </label>
-            <input type="radio" name="repetir" value="una-semana" id="una-semana">
+        
+          <div class="d-flex justify-content-around align-items-center w-100">
+            <button type="submit" class="button-guardar-cancelar">Guardar</button>
+            <button type="button" (click)="volverARecordatorios()" class="button-guardar-cancelar">Cancelar</button>
           </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-mes">
-            1 vez por mes
-          </label>
-          <input type="radio" name="repetir" value="un-mes" id="un-mes">
-         </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-ano">
-            1 vez por año
-          </label>
-          <input type="radio" name="repetir" value="un-ano" id="un-ano">
-         </div>
-
-        </div>        
-
-        <div class="d-flex justify-content-around align-items-center w-100">
-          <button type="submit" class="button-guardar-cancelar">
-            Guardar
-          </button>
-          <button type="button" class="button-guardar-cancelar">
-            Cancelar
-          </button>
-        </div>
-
-      </form>
+        </form>
 
       </div>
 

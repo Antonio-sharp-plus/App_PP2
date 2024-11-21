@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',

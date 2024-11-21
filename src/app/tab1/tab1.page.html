@@ -1,9 +1,9 @@
 <ion-menu side="end" contentId="main-content">
   <ion-content class="ion-padding contenido-menu">
-    <button>Recordatorios</button>
-    <button>Listas</button>
+    <button (click)="irARecordatorios()">Recordatorios</button>
+    <button (click)="irAListas()">Listas</button>
     <button>Etiquetas</button>
-    <button>Cerrar sesión</button>
+    <button (click)="CerrarSesion()">Cerrar sesión</button>
   </ion-content>
 </ion-menu>
 
@@ -22,9 +22,10 @@
     <div class="contenedor-general">
 
       <div class="contenedor-recordatorios">
-        <button class="button-aviso-crear">
+        <button (click)="irACrearRecordatorio()" class="button-aviso-crear">
           ¡Creá tu primer recordatorio!
         </button>
+        
 
         <div class="contenedor-recordatorio">
           <div class="d-flex justify-content-center align-items-center flex-column w-100">
@@ -40,7 +41,7 @@
             <span>19:00</span>
           </div>
           <div class="d-flex justify-content-around align-items-center w-75">
-            <button class="boton-detalles-recordatorio">Detalles</button>
+            <button (click)="verDetalles()" class="boton-detalles-recordatorio">Detalles</button>
             <ion-icon name="trash-outline" class="color-icon"></ion-icon>
           </div>
         </div>
