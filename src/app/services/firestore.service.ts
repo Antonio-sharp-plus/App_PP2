@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { signOut } from '@firebase/auth';
+import { setDoc } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { query, where, getDocs } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
+  recordatoriosSubject = new BehaviorSubject<any[]>([]); // Subject para los recordatorios
 
   firestore: Firestore = inject(Firestore)
   idUsuarioLogueado:string = ""
@@ -29,9 +33,11 @@ export class FirestoreService {
 
 private async obtenerIdUsuarioLogueado() {
   try {
-    this.idUsuarioLogueado = await this.idUserActual();
+    const uid = await this.idUserActual();
+    this.idUsuarioLogueado = uid;
   } catch (error) {
     console.error("Error obteniendo el ID del usuario logueado:", error);
+    this.navCtrl.navigateForward('/login'); // Redirige al login si no hay usuario autenticado
   }
 }
 
@@ -70,9 +76,10 @@ private async obtenerIdUsuarioLogueado() {
   async guardarRecordatorio(userId: string, recordatorio: { nombreRecordatorio: string, descRecordatorio: string, fechaRecordatorio: string, horaRecordatorio: string, recordar: string}) {
     const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
     try {
-        await updateDoc(userDocRef, {
-            recordatorio: arrayUnion(recordatorio) // Guardar objeto en vez del id solo 
-        });
+      await setDoc(userDocRef, {
+        recordatorio: arrayUnion(recordatorio)
+    }, { merge: true }); // Combina con los datos existentes en lugar de sobrescribir
+        this.getRecordatorios(userId);
         this.showToast("Recordatorio agregado.");
     } catch (error) {
       this.showToast("Error al agregar a recordatorio: "+error);
@@ -112,5 +119,61 @@ async showToast(message: string) {
       }
       }
 
-
+      /**
+ * Elimina un recordatorio de la lista de recordatorios del usuario en Firestore.
+ * 
+ * @param {string} userId - ID del usuario del que se eliminará el recordatorio.
+ * @param {{ nombreRecordatorio: string }} - Objeto que contiene el nombre y ID de la ciudad a eliminar.
+ */
+      async eliminarRecordatorio(userId: string, recordatorio: any) {
+        const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
+        
+        try {
+          // Asegúrate de que este objeto sea el mismo que el que guardas en Firestore
+          const recordatorioRef = {
+            nombreRecordatorio: recordatorio.nombreRecordatorio,
+            descRecordatorio: recordatorio.descRecordatorio,
+            fechaRecordatorio: recordatorio.fechaRecordatorio,
+            horaRecordatorio: recordatorio.horaRecordatorio,
+            recordar: recordatorio.recordar
+          };
+      
+          await updateDoc(userDocRef, {
+            recordatorio: arrayRemove(recordatorioRef) // Eliminar el objeto específico
+          });
+      
+          this.showToast("Recordatorio eliminado");
+          this.getRecordatorios(userId);
+        } catch (error) {
+          this.showToast("Error al eliminar el recordatorio: " + error);
+        }
+      }
+      
+      async traerDetalles(userId: string, nombreRecordatorio: string) {
+        const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
+        
+        try {
+          // Intentar acceder al documento y buscar el recordatorio específico
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const recordatorios = userData?.['recordatorio'] || [];
+            const recordatorio = recordatorios.find((r: { nombreRecordatorio: string; }) => r.nombreRecordatorio === nombreRecordatorio);
+            console.log(recordatorios)
+            if (recordatorio) {
+              console.log(recordatorio)
+              return recordatorio; // Devuelve el recordatorio encontrado
+            } else {
+              console.log('No se encontró el recordatorio');
+              return null;
+            }
+          } else {
+            console.log('El documento no existe');
+            return null;
+          }
+        } catch (error) {
+          console.error('Error al obtener el recordatorio:', error);
+          return null;
+        }
+      }
 }

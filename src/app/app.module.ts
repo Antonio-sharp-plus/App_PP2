@@ -17,12 +17,13 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore"
 import { AngularFireModule } from '@angular/fire/compat';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,AngularFireModule.initializeApp(environment.firebaseConfig) ,AngularFireAuthModule, AngularFirestoreModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,AngularFireModule.initializeApp(environment.firebaseConfig) ,AngularFireAuthModule, AngularFirestoreModule,IonicStorageModule.forRoot()],
   providers: [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
     provideAuth(() => getAuth()), 
