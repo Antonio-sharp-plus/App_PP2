@@ -11,18 +11,35 @@ export class DetallesRecordatorioPage implements OnInit {
 
   recordatorio: any; // Variable para almacenar el recordatorio
 
-  constructor( private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
-  ngOnInit() {
-    // Recibir el recordatorio desde el estado de la navegación
-    if (this.router.getCurrentNavigation()?.extras.state?.['recordatorio']) {
-      this.recordatorio = this.router.getCurrentNavigation()?.extras.state?.['recordatorio'];
+  ngOnInit() 
+  { this.loadRecordatorio(); } 
+  
+  
+  loadRecordatorio() 
+  { if (this.router.getCurrentNavigation()?.extras.state?.['recordatorio']) 
+    { this.recordatorio = this.router.getCurrentNavigation()?.extras.state?.['recordatorio']; } 
+    else 
+    { this.irARecordatorios(); } 
+  } 
+  
+  irARecordatorios() 
+  { this.router.navigate(['/tabs/tab1']); } 
+  
+  habilitarEdicion() 
+  { // Implementar lógica para habilitar edición si es necesario 
+  
   }
-}
 
-  // Método para redirigir a la página de Recordatorios
-  irARecordatorios() {
-    this.router.navigate(['/tabs/tab1']);
+  irAListas(){
+    this.router.navigate(['/tabs/tab2'])
+  }
+  //Método para cerrar sesion
+  CerrarSesion(){
+    this.router.navigate(['/tabs/login'])
   }
 }

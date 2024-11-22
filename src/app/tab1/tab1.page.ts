@@ -31,14 +31,14 @@ export class Tab1Page implements OnInit {
 
   // Método para redirigir a la página de crear recordatorio
   irACrearRecordatorio() {
-    this.router.navigate(['/tabs/crear-recordatorio']);
+    this.router.navigate(['./crear-recordatorio']);
   }
 
   //metodo para ver los detalles del recordatorio
   verDetalles(recordatorio: Recordatorio) {
     // Navegar a la página de detalles y pasar el recordatorio seleccionado
-    this.router.navigate(['/tabs/detalles-recordatorio'], {
-      state: { recordatorio }
+    this.router.navigate(['./detalles-recordatorio'], 
+      { state: { recordatorio: recordatorio }
     });
   }
   //Método para redirigir a la página a las listas
