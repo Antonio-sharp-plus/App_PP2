@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { SharedModule } from '../shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +16,7 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     FormsModule,
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
+    SharedModule
   ],
   declarations: [Tab1Page]
 })

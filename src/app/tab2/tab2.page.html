@@ -1,28 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Listas de tareas
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-app>
+  <ion-menu side="end" contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding contenido-menu">
+      <button (click)="irARecordatorios()">Recordatorios</button>
+      <button (click)="irAListas()">Listas</button>
+      <button>Etiquetas</button>
+      <button (click)="CerrarSesion()">Cerrar sesión</button>
+    </ion-content>
+  </ion-menu>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Listas de tareas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="ion-page" id="main-content">
+    <ion-header [translucent]="true">
+      <ion-toolbar>
+        <ion-title>Listas de tareas</ion-title>
+        <ion-buttons slot="end">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
 
-  <!-- Funcionalidad de creación de listas con checkbox -->
-  <ion-item>
-    <ion-input [(ngModel)]="newList" placeholder="New List"></ion-input>
-    <ion-button (click)="addList()">Add List</ion-button>
-  </ion-item>
+    <ion-content [fullscreen]="true">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">Listas de tareas</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-  <ion-list>
-    <ion-item *ngFor="let list of lists" (click)="selectList(list.name)">
-      <ion-label>{{ list.name }}</ion-label>
-    </ion-item>
-  </ion-list>
+      <!-- Funcionalidad de creación de listas con etiquetas -->
+      <ion-item>
+        <ion-input [(ngModel)]="newList" placeholder="Nueva Lista"></ion-input>
+        <ion-input [(ngModel)]="newTag" placeholder="Etiqueta"></ion-input>
+        <ion-button (click)="addList()">Agregar Lista</ion-button>
+      </ion-item>
 
-</ion-content>
+      <ion-list>
+        <ion-item-sliding *ngFor="let list of lists; let i = index">
+          <ion-item (click)="selectList(list.name)">
+            <ion-label>{{ list.name }}</ion-label>
+            <ion-badge *ngFor="let tag of list.tags">{{ tag }}</ion-badge>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option (click)="editList(i, list)">Editar</ion-item-option>
+            <ion-item-option color="danger" (click)="deleteList(i)">Eliminar</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-content>
+  </div>
+</ion-app>
