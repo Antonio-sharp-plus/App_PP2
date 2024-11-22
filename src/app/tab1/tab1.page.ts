@@ -35,8 +35,11 @@ export class Tab1Page implements OnInit {
   }
 
   //metodo para ver los detalles del recordatorio
-  verDetalles(){
-    this.router.navigate(['/tabs/detalles-recordatorio'])
+  verDetalles(recordatorio: Recordatorio) {
+    // Navegar a la página de detalles y pasar el recordatorio seleccionado
+    this.router.navigate(['/tabs/detalles-recordatorio'], {
+      state: { recordatorio }
+    });
   }
   //Método para redirigir a la página a las listas
   irAListas(){
@@ -50,5 +53,12 @@ export class Tab1Page implements OnInit {
   irARecordatorios() {
     this.router.navigate(['/tabs/tab1']);
   }
+   // Método para borrar un recordatorio
+   borrarRecordatorio(recordatorio: Recordatorio) {
+    // Llamamos al servicio para eliminar el recordatorio
+    this.recordatorioService.eliminarRecordatorio(recordatorio);
 
+    // Actualizamos la lista de recordatorios
+    this.recordatorios = this.recordatorioService.obtenerRecordatorios();
+  }
 }

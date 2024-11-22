@@ -20,58 +20,66 @@
   <ion-content class="ion-padding background-contenido">
     <!-- Hijos que serán centrados -->
     <div class="contenedor-general">
-      
       <div class="contenedor-recordatorios">
-      <form action="" class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
-        <input type="text" placeholder="Titulo Recordatorio" class="custom-input">
+        <form action="" class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
+          <input 
+            type="text" 
+            placeholder="Titulo Recordatorio" 
+            class="custom-input" 
+            [(ngModel)]="recordatorio.titulo" 
+            name="titulo" 
+            readonly
+          >
 
-        
-        <textarea type="text" class="contenedor-input" placeholder="¿Querés añadir un comentario?"></textarea>
-        <input type="date" class="contenedor-input">
-        <input type="time" class="contenedor-input">
-        
-        <div class="radio-group">
-          <p class="titulo-repetir">¿Repetir recordatorio?</p>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="No Repetir">
-              No repetir
-            </label>
-            <input type="radio" name="repetir" value="No Repetir" checked id="No Repetir">
+          <textarea 
+            class="contenedor-input" 
+            placeholder="¿Querés añadir un comentario?" 
+            [(ngModel)]="recordatorio.comentario" 
+            name="comentario" 
+            readonly
+          ></textarea>
+
+          <input 
+            type="date" 
+            class="contenedor-input" 
+            [(ngModel)]="recordatorio.fecha" 
+            name="fecha" 
+            readonly
+          >
+
+          <input 
+            type="time" 
+            class="contenedor-input" 
+            [(ngModel)]="recordatorio.hora" 
+            name="hora" 
+            readonly
+          >
+
+          <div class="radio-group">
+            <p class="titulo-repetir">¿Repetir recordatorio?</p>
+            <div *ngFor="let opcion of ['No Repetir', 'Una Semana', 'Un Mes', 'Un Año']">
+              <label [for]="opcion">{{ opcion }}</label>
+              <input 
+                type="radio" 
+                name="repetir" 
+                [id]="opcion" 
+                [value]="opcion" 
+                [(ngModel)]="recordatorio.repetir" 
+                [disabled]="true"
+              >
+            </div>
           </div>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="Una Semana">
-              1 vez por semana
-            </label>
-            <input type="radio" name="repetir" value="Una Semana" id="Una Semana">
+
+          <div class="d-flex justify-content-around align-items-center w-100">
+            <button type="submit" class="button-guardar-cancelar">
+              Editar
+            </button>
+            <button (click)="irARecordatorios()" type="button" class="button-guardar-cancelar">
+              Volver
+            </button>
           </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="Un Mes">
-            1 vez por mes
-          </label>
-          <input type="radio" name="repetir" value="Un Mes" id="Un Mes">
-         </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="Un Año">
-            1 vez por año
-          </label>
-          <input type="radio" name="repetir" value="Un Año" id="Un Año">
-         </div>
-
-        </div>        
-
-        <div class="d-flex justify-content-around align-items-center w-100">
-          <button type="submit" class="button-guardar-cancelar">
-            Editar
-          </button>
-          <button (click)="irARecordatorios()"type="button" class="button-guardar-cancelar">
-            Volver
-          </button>
-        </div>
-
-      </form>
-
+        </form>
       </div>
-
     </div>
   </ion-content>
 </div>

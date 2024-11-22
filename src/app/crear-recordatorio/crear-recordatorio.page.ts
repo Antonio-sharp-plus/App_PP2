@@ -21,9 +21,29 @@ export class CrearRecordatorioPage {
     private router: Router
   ) {}
 
+  // Este metodo se ejecuta cuando se accede a la pagina
+  ngOnInit() {
+    // Resetear los campos a valores vacios al acceder a la pagina
+    this.resetForm();
+  }
+
+  // Metodo para resetear el formulario a valores vacios
+  resetForm() {
+    this.recordatorio = {
+      titulo: '',
+      comentario: '',
+      fecha: '',
+      hora: '',
+      repetir: 'no-repetir',
+    };
+  }
+
   guardarRecordatorio() {
-    // Guarda el recordatorio en el servicio
-    this.recordatorioService.agregarRecordatorio(this.recordatorio);
+    // Crear una nueva instancia del recordatorio
+    const nuevoRecordatorio = { ...this.recordatorio }; // Crear una copia del objeto
+
+    // Guarda el nuevo recordatorio en el servicio
+    this.recordatorioService.agregarRecordatorio(nuevoRecordatorio);
 
     // Redirige a la tab 1
     this.router.navigate(['/tabs/tab1']);
@@ -33,15 +53,15 @@ export class CrearRecordatorioPage {
     this.router.navigate(['/tabs/tab1'])
   }
 
-  //Método para redirigir a la página a las listas
+  //Metodo para redirigir a la página a las listas
   irAListas(){
     this.router.navigate(['/tabs/tab2'])
   }
-  //Método para cerrar sesion
+  //Metodo para cerrar sesion
   CerrarSesion(){
     this.router.navigate(['/tabs/login'])
   }
-   // Método para redirigir a la página de crear recordatorio
+   // Metodo para redirigir a la tab de crear recordatorio
    irACrearRecordatorio() {
     this.router.navigate(['/tabs/crear-recordatorio']);
   }

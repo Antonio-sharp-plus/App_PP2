@@ -26,23 +26,23 @@
           ¡Creá tu primer recordatorio!
         </button>
         
-
-        <div class="contenedor-recordatorio">
+        
+        <div *ngFor="let recordatorio of recordatorios" class="contenedor-recordatorio">
           <div class="d-flex justify-content-center align-items-center flex-column w-100">
-            <p class="titulo-recordatorio">Pantallas PPII</p>
+            <p class="titulo-recordatorio">{{ recordatorio.titulo }}</p>
             <div class="divisor-titulo-recordatorio"></div>
           </div>
           <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
             <span>¿Cuándo?</span>
-            <span>25/10/2024</span>
+            <span>{{ recordatorio.fecha }}</span>
           </div>
           <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
             <span>¿Hora?</span>
-            <span>19:00</span>
+            <span>{{ recordatorio.hora }}</span>
           </div>
           <div class="d-flex justify-content-around align-items-center w-75">
-            <button (click)="verDetalles()" class="boton-detalles-recordatorio">Detalles</button>
-            <ion-icon name="trash-outline" class="color-icon"></ion-icon>
+            <button (click)="verDetalles(recordatorio)" class="boton-detalles-recordatorio">Detalles</button>
+            <ion-icon name="trash-outline" class="color-icon" (click)="borrarRecordatorio(recordatorio)"></ion-icon>
           </div>
         </div>
 
