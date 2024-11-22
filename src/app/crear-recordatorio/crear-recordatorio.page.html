@@ -22,53 +22,52 @@
     <div class="contenedor-general">
       
       <div class="contenedor-recordatorios">
-      <form action="" class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
-        <input type="text" placeholder="Titulo Recordatorio" class="custom-input">
-
-        
-        <textarea type="text" class="contenedor-input" placeholder="¿Querés añadir un comentario?"></textarea>
-        <input type="date" class="contenedor-input">
-        <input type="time" class="contenedor-input">
-        
-        <div class="radio-group">
-          <p class="titulo-repetir">¿Repetir recordatorio?</p>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="no-repetir">
-              No repetir
-            </label>
-            <input type="radio" name="repetir" value="no-repetir" checked id="no-repetir">
+        <form class="w-100 d-flex justify-content-start align-items-center flex-column h-100">
+          <input [(ngModel)]="recordatorio.titulo" name="titulo" type="text" placeholder="Titulo Recordatorio" class="custom-input">
+          
+          <textarea [(ngModel)]="recordatorio.comentario" name="comentario" class="contenedor-input" placeholder="¿Querés añadir un comentario?"></textarea>
+          
+          <input [(ngModel)]="recordatorio.fecha" name="fecha" type="date" class="contenedor-input">
+          
+          <input [(ngModel)]="recordatorio.hora" name="hora" type="time" class="contenedor-input">
+          
+          <div class="radio-group">
+            <p class="titulo-repetir">¿Repetir recordatorio?</p>
+            <div class="d-flex flex-row-reverse separador-radio">
+              <label class="contenedor-label-radio" for="no-repetir">
+                No repetir
+              </label>
+              <input type="radio" name="recordar" value="no-repetir" checked id="no-repetir" [(ngModel)]="recordatorio.recordar">
+            </div>
+            <div class="d-flex flex-row-reverse separador-radio">
+              <label class="contenedor-label-radio" for="una-semana">
+                1 vez por semana
+              </label>
+              <input type="radio" name="recordar" value="una-semana" id="una-semana" [(ngModel)]="recordatorio.recordar">
+            </div>
+            <div class="d-flex flex-row-reverse separador-radio">
+              <label class="contenedor-label-radio" for="un-mes">
+                1 vez por mes
+              </label>
+              <input type="radio" name="recordar" value="un-mes" id="un-mes" [(ngModel)]="recordatorio.recordar">
+            </div>
+            <div class="d-flex flex-row-reverse separador-radio">
+              <label class="contenedor-label-radio" for="un-ano">
+                1 vez por año
+              </label>
+              <input type="radio" name="recordar" value="un-ano" id="un-ano" [(ngModel)]="recordatorio.recordar">
+            </div>
           </div>
-          <div class="d-flex flex-row-reverse separador-radio">
-            <label class="contenedor-label-radio" for="una-semana">
-              1 vez por semana
-            </label>
-            <input type="radio" name="repetir" value="una-semana" id="una-semana">
+          
+          <div class="d-flex justify-content-around align-items-center w-100">
+            <button type="button" class="button-guardar-cancelar" (click)="guardarRecordatorio()">
+              Guardar
+            </button>
+            <button type="button" class="button-guardar-cancelar" (click)="cancelarCreacion()">
+              Cancelar
+            </button>
           </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-mes">
-            1 vez por mes
-          </label>
-          <input type="radio" name="repetir" value="un-mes" id="un-mes">
-         </div>
-         <div class="d-flex flex-row-reverse separador-radio">
-          <label class="contenedor-label-radio" for="un-ano">
-            1 vez por año
-          </label>
-          <input type="radio" name="repetir" value="un-ano" id="un-ano">
-         </div>
-
-        </div>        
-
-        <div class="d-flex justify-content-around align-items-center w-100">
-          <button type="submit" class="button-guardar-cancelar">
-            Guardar
-          </button>
-          <button type="button" class="button-guardar-cancelar">
-            Cancelar
-          </button>
-        </div>
-
-      </form>
+        </form>
 
       </div>
 

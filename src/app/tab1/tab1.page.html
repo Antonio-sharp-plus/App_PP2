@@ -1,9 +1,8 @@
 <ion-menu side="end" contentId="main-content">
   <ion-content class="ion-padding contenido-menu">
-    <button>Recordatorios</button>
-    <button>Listas</button>
-    <button>Etiquetas</button>
-    <button>Cerrar sesión</button>
+    <button (click)="irARecordatorios()">Recordatorios</button>
+    <button (click)="irAListas()">Listas</button>
+    <button (click)="CerrarSesion()">Cerrar sesión</button>
   </ion-content>
 </ion-menu>
 
@@ -21,29 +20,31 @@
     <!-- Hijos que serán centrados -->
     <div class="contenedor-general">
 
-      <div class="contenedor-recordatorios">
-        <button class="button-aviso-crear">
-          ¡Creá tu primer recordatorio!
-        </button>
+      <div class="contenedor-recordatorios"> <!-- Contedor naranja -->
 
-        <div class="contenedor-recordatorio">
+
+        <div class="contenedor-recordatorio" *ngFor="let recordatorio of firestoreService.recordatorios"> <!-- Contenedor card -->
           <div class="d-flex justify-content-center align-items-center flex-column w-100">
-            <p class="titulo-recordatorio">Pantallas PPII</p>
+            <p class="titulo-recordatorio">{{ recordatorio.nombreRecordatorio }}</p>
             <div class="divisor-titulo-recordatorio"></div>
           </div>
           <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
             <span>¿Cuándo?</span>
-            <span>25/10/2024</span>
+            <span>{{ recordatorio.fechaRecordatorio }}</span>
           </div>
           <div class="d-flex justify-content-between align-items-center w-75 color-texto-recordatorio">
             <span>¿Hora?</span>
-            <span>19:00</span>
+            <span>{{ recordatorio.horaRecordatorio }}</span>
           </div>
           <div class="d-flex justify-content-around align-items-center w-75">
             <button class="boton-detalles-recordatorio">Detalles</button>
             <ion-icon name="trash-outline" class="color-icon"></ion-icon>
           </div>
         </div>
+
+        <button class="button-aviso-crear" *ngIf="firestoreService.recordatorios.length === 0">
+          ¡Creá tu primer recordatorio!
+        </button>
 
       </div>
 
