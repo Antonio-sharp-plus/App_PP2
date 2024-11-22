@@ -8,15 +8,15 @@
   <form (submit)="onRegister()" class="contenedor-formulario-login">
     <ion-item class="tones">
       <ion-icon class="mail" name="person-circle-outline"></ion-icon>
-      <ion-input type="email" [(ngModel)]="email" name="email" required placeholder="Email"></ion-input>
+      <ion-input type="email" [(ngModel)]="user.email" name="email" required placeholder="Email"></ion-input>
     </ion-item>
 
     <ion-item class="tones">
       <ion-icon class="candado" name="lock-closed-outline"></ion-icon>
-      <ion-input type="password" [(ngModel)]="password" name="password" required placeholder="Contraseña"></ion-input>
+      <ion-input type="password" [(ngModel)]="user.password" name="password" required placeholder="Contraseña"></ion-input>
     </ion-item>
     
-    <button class="boton-iniciar-sesion" type="submit" [disabled]="!email || !password">Registrarme</button>
+    <button class="boton-iniciar-sesion" type="submit" [disabled]="!user.email || !user.password">Registrarme</button>
     <p class="texto-tiene-cuenta">¿Ya tenés una cuenta?<span class="texto-ancla" (click)="goToLogin()">¡Iniciá sesión acá!</span></p>
 
   </form>

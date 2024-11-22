@@ -26,7 +26,7 @@ const routes: Routes = [
     loadChildren: () => import('./crear-recordatorio/crear-recordatorio.module').then( m => m.CrearRecordatorioPageModule)
   },
   {
-    path: 'detalles-recordatorio/:idrecordatorio',
+    path: 'detalles-recordatorio/:nombreRecordatorio',
     loadChildren: () => import('./detalles-recordatorio/detalles-recordatorio.module').then( m => m.DetallesRecordatorioPageModule)
   }
 

@@ -2,31 +2,6 @@
     --background: url('/assets/img/fondo-pantallas.jpg') no-repeat center center / cover fixed;
   }
 
-  .contenido-menu {
-    display: flex;
-    flex-direction: column; /* Alinea los elementos uno debajo de otro */
-    justify-content: center; /* Centra los elementos verticalmente */
-    align-items: center; /* Centra los elementos horizontalmente */
-    height: 100%; /* Asegura que ocupe todo el alto del menú */
-    gap: 10px; /* Espaciado entre los enlaces */
-    --background-color: #d9b596 ;
-  }
-  
-  .contenido-menu button {
-    text-decoration: none; /* Quita el subrayado */
-    color: #000; /* Cambia el color del texto */
-    font-size: 1.2rem; /* Ajusta el tamaño de fuente */
-    padding: 10px; /* Espaciado interno para los enlaces */
-    width: 100%; /* Haz que los enlaces ocupen todo el ancho */
-    text-align: center; /* Alinea el texto al centro */
-    background-color: #f4f4f4; /* Fondo para visibilidad */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #e7ded5;
-  }
-  
-
   .contenedor-general{
     display: flex;
     flex-direction: column;
@@ -96,4 +71,18 @@
     padding: 4px 16px;
     border-radius: 16px;
     margin-top: 4px;
+  }
+
+
+  .loader-contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Toma toda la altura del contenedor */
+    text-align: center;
+  
+    ion-spinner {
+      margin-bottom: 10px; /* Espaciado entre el spinner y el texto */
+    }
   }
