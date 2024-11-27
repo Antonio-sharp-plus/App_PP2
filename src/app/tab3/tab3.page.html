@@ -1,31 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-page" id="main-content">
   <ion-toolbar>
-    <ion-title>{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge></ion-title>
+    <ion-title>{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge></ion-title> 
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding background-contenido">
   <ion-header collapse="condense">
+    <input type="text" placeholder="Título de la lista" class="custom-input">
     <ion-toolbar>
       <ion-title size="large">{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge></ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-item>
-    <ion-input [(ngModel)]="newTask" placeholder="Nueva Tarea"></ion-input>
-    <ion-button (click)="addTask()">Agregar Tarea</ion-button>
-  </ion-item>
+  <div class="contenedor-recordatorios">
+    <h3>{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge> <ion-icon name="pricetag-outline"></ion-icon> </h3>
+  <div class="d-flex flex-row-reverse separador-radio">
+    <button (click)="addTask()"><ion-icon name="add-outline"></ion-icon></button>
+    <input class="contenedor-label-radio" [(ngModel)]="newTask" placeholder="Agregar Item">
+  </div>
 
-  <ion-item>
-    <ion-label>Completar Todo</ion-label>
-    <ion-checkbox [(ngModel)]="allChecked" (ionChange)="toggleAllTasks()"></ion-checkbox>
-  </ion-item>
-
-  <ion-list>
+  <ion-list class="fondo">
     <ion-item-sliding *ngFor="let task of tasks">
       <ion-item>
-        <ion-label>{{ task.name }}</ion-label>
-        <ion-checkbox slot="start" [(ngModel)]="task.completed"></ion-checkbox>
+        <ion-label class="contenedor-label-radio" >{{ task.name }}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="task.completed"></ion-checkbox>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="editTask(task)">Editar</ion-item-option>
@@ -33,4 +31,18 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <div class="button-todo">
+    <ion-label>Completar Todo </ion-label>
+    <ion-checkbox [(ngModel)]="allChecked" (ionChange)="toggleAllTasks()"></ion-checkbox>
+  </div>
+</div>
+<div class="d-flex justify-content-around align-items-center w-100">
+  <button type="submit" class="button-guardar-cancelar">
+    Guardar
+  </button>
+  <button type="button" class="button-guardar-cancelar">
+    Cancelar
+  </button>
+</div>
 </ion-content>
