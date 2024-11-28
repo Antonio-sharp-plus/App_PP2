@@ -36,6 +36,7 @@ private async obtenerIdUsuarioLogueado() {
     const uid = await this.idUserActual();
     this.idUsuarioLogueado = uid;
   } catch (error) {
+    this.showToast("Necesitas iniciar sesion para ingresar a este sitio.")
     console.error("Error obteniendo el ID del usuario logueado:", error);
     this.navCtrl.navigateForward('/login'); // Redirige al login si no hay usuario autenticado
   }
