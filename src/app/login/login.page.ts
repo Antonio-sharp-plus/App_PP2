@@ -4,6 +4,8 @@ import { FirestoreService } from '../services/firestore.service';
 import { signOut } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { AlertController } from '@ionic/angular';
 import { browserLocalPersistence, getAuth, GoogleAuthProvider, setPersistence, signInWithPopup, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
 
 
@@ -24,7 +26,9 @@ export class LoginPage implements OnInit{
   constructor(
     public firestoreService: FirestoreService,
     private fb: FormBuilder,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -40,37 +44,46 @@ export class LoginPage implements OnInit{
     // logica de autenticacion
     console.log('Correo:', this.email);
     console.log('Contraseña:', this.password);
-
-    // Si el checkbox está marcado, guarda el email en localStorage
-    if (this.recordarEmail) {
-    localStorage.setItem('emailGuardado', this.email);
-    } else {
-      localStorage.removeItem('emailGuardado');
-    }
+  }
+    
       
-      const auth = getAuth();
+    async onLogin() {
       try {
-        await setPersistence(auth, browserLocalPersistence)
-        .then(() => signInWithEmailAndPassword(auth, this.email, this.password))
-        // Redirigir al usuario a la página principal o donde quieras
-        this.navCtrl.navigateForward('/tabs/tab1');
-      } catch (error) {
-        this.setOpen(true)
+        const userEmail = await this.authService.login(this.email, this.password);
+        const alert = await this.alertCtrl.create({
+          header: 'Inicio de sesión exitoso',
+          message: `Recordatorio de bienvenida: Bienvenido, ${userEmail}!`,
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+                // redireccion a la pag principal
+                this.navCtrl.navigateForward('/tabs/tab1');
+              },
+            },
+          ],
+        });
+        await alert.present();
+      } catch (error: any) {
+        const alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: error.message,
+          buttons: ['OK'],
+        });
+        await alert.present();
       }
-    // Lógica adicional para iniciar sesión
-    console.log('Iniciar sesión con:', this.email);
-    // redireccion si la autenticacion esta bien
-    this.navCtrl.navigateForward('/tabs');
-  }
+      // Si el checkbox está marcado, guarda el email en localStorage 
+      if (this.recordarEmail) { 
+        localStorage.setItem('emailGuardado', this.email); 
+      } else { 
+        localStorage.removeItem('emailGuardado'); }
+    }
+    goToRegister() { 
+      this.navCtrl.navigateForward('/register'); 
+    } 
+    goToRestorePassword()
+    { this.navCtrl.navigateForward('/restore-password'); 
 
-  setOpen(isOpen: boolean) {
-    this.isToastOpen = isOpen;
+    } 
   }
-
-  goToRegister() {
-    this.navCtrl.navigateForward('/register');
-  }
-  goToRestorePassword(){
-    this.navCtrl.navigateForward('/restore-password');
-  }
-}
+  
