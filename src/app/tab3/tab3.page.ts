@@ -83,4 +83,10 @@ export class Tab3Page implements OnInit {
     this.tasks = this.tasks.filter(t => t !== task);
     this.taskService.updateTasks(this.listName, this.tasks);
   }
+
+  eliminarTareasSeleccionadas() 
+  { 
+    this.tasks = this.tasks.filter(task => !task.completed); 
+    this.taskService.updateTasks(this.listName, this.tasks); 
+  }
 }
