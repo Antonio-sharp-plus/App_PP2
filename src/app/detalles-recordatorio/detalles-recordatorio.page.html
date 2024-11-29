@@ -1,6 +1,13 @@
 <ion-content class="ion-padding background-contenido">
   <div class="contenedor-general">
     <div class="contenedor-recordatorios">
+
+      <div *ngIf="isLoading" class="loader-contenedor">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando recordatorios...</p>
+      </div>
+
+      <ng-container *ngIf="!isLoading">
       <form 
         (ngSubmit)="editarRecordatorio()" 
         class="w-100 d-flex justify-content-start align-items-center flex-column h-100"
@@ -102,6 +109,7 @@
           </button>
         </div>
       </form>
+    </ng-container>
     </div>
   </div>
 </ion-content>
