@@ -16,14 +16,14 @@
   <div class="ion-page" id="main-content">
     <ion-header [translucent]="true">
       <ion-toolbar>
-        <ion-title>Listas de tareas</ion-title>
+        <ion-title>Listas</ion-title>
         <ion-buttons slot="end">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content [fullscreen]="true">
+    <ion-content class="ion-padding background-contenido">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Listas de tareas</ion-title>
@@ -31,11 +31,12 @@
       </ion-header>
 
       <!-- Funcionalidad de creación de listas con etiquetas -->
-      <ion-item>
-        <ion-input [(ngModel)]="newList" placeholder="Nueva Lista"></ion-input>
-        <ion-input [(ngModel)]="newTag" placeholder="Etiqueta"></ion-input>
-        <ion-button (click)="addList()">Agregar Lista</ion-button>
-      </ion-item>
+      <div class="contenedor-listas">
+        <button class="button-aviso-crear" (click)="addList()">¡Crea tu primer lista!</button>
+      </div>
+
+      <ion-input [(ngModel)]="newList" placeholder="Nueva Lista"></ion-input>
+      <ion-input [(ngModel)]="newTag" placeholder="Etiqueta"></ion-input>
 
       <ion-list>
         <ion-item-sliding *ngFor="let list of lists; let i = index">
