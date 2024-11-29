@@ -36,10 +36,19 @@ private async obtenerIdUsuarioLogueado() {
     const uid = await this.idUserActual();
     this.idUsuarioLogueado = uid;
   } catch (error) {
-    this.showToast("Necesitas iniciar sesion para ingresar a este sitio.")
-    console.error("Error obteniendo el ID del usuario logueado:", error);
-    this.navCtrl.navigateForward('/login'); // Redirige al login si no hay usuario autenticado
-  }
+    // Const para verificar si estamos en la ruta correcta.
+    const currentRoute = this.router.url;
+
+    // Si no estamos en "/login" o "/register" se muestra el mensaje de error y redirigimos.
+    if (!currentRoute.includes('/login') && !currentRoute.includes('/register')) {
+      this.showToast("Necesitas iniciar sesión para ingresar a este sitio.");
+      console.error("Error obteniendo el ID del usuario logueado:", error);
+      this.navCtrl.navigateForward('/login'); // Redirige al login si no hay usuario autenticado.
+    } else {
+      // Si ya estamos en login o register mostramos un mensaje para saber que la funcionalidad esta ok.
+      return
+    }
+  }
 }
 
     /**
@@ -74,18 +83,59 @@ private async obtenerIdUsuarioLogueado() {
   }
 
 
-  async guardarRecordatorio(userId: string, recordatorio: { nombreRecordatorio: string, descRecordatorio: string, fechaRecordatorio: string, horaRecordatorio: string, recordar: string}) {
-    const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
-    try {
-      await setDoc(userDocRef, {
-        recordatorio: arrayUnion(recordatorio)
-    }, { merge: true }); // Combina con los datos existentes en lugar de sobrescribir
-        this.getRecordatorios(userId);
-        this.showToast("Recordatorio agregado.");
-    } catch (error) {
-      this.showToast("Error al agregar a recordatorio: "+error);
-    }
+//   async guardarRecordatorio(userId: string, recordatorio: { nombreRecordatorio: string, descRecordatorio: string, fechaRecordatorio: string, horaRecordatorio: string, recordar: string}) {
+//     const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
+//     try {
+//       await setDoc(userDocRef, {
+//         recordatorio: arrayUnion(recordatorio)
+//     }, { merge: true }); // Combina con los datos existentes en lugar de sobrescribir
+//         this.getRecordatorios(userId);
+//         this.showToast("Recordatorio agregado.");
+//     } catch (error) {
+//       this.showToast("Error al agregar a recordatorio: "+error);
+//     }
+// }
+
+async guardarRecordatorio(userId: string, recordatorio: { nombreRecordatorio: string, descRecordatorio: string, fechaRecordatorio: string, horaRecordatorio: string, recordar: string}) {
+  const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
+  try {
+    // Obtener el documento actual del usuario
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const datos = userDoc.data();
+      const recordatoriosExistentes = datos['recordatorio'] || [];
+
+      console.log('Recordatorios existentes:', recordatoriosExistentes);
+
+      // Verificar si ya existe un recordatorio con el mismo nombre
+      const recordatorioDuplicado = recordatoriosExistentes.find(
+        (r: any) => r.nombreRecordatorio.trim().toLowerCase() === recordatorio.nombreRecordatorio.trim().toLowerCase()
+      );
+
+      if (recordatorioDuplicado) {
+        console.log('Recordatorio duplicado encontrado:', recordatorioDuplicado);
+        this.showToast("Ya existe un recordatorio con ese nombre, cree otro porfavor");
+        return; // Salir de la función si hay duplicado
+      }
+    }
+
+    // Si no hay duplicado, agregar el nuevo recordatorio
+    await setDoc(
+      userDocRef,
+      {
+        recordatorio: arrayUnion(recordatorio),
+      },
+      { merge: true } // Combina los datos existentes en lugar de sobrescribir
+    );
+
+    this.getRecordatorios(userId);
+    this.showToast("Recordatorio agregado.");
+  } catch (error) {
+    console.error('Error al guardar el recordatorio:', error);
+    this.showToast("Error al agregar recordatorio: " + error);
+  }
 }
+
 async showToast(message: string) {
   const toast = await this.toastController.create({
     message: message,
@@ -150,6 +200,13 @@ async showToast(message: string) {
         }
       }
       
+
+      /**
+       * Trae los valores para rellenar el formulario en mi html de /detalles
+       * @param userId 
+       * @param nombreRecordatorio 
+       * @returns 
+       */
       async traerDetalles(userId: string, nombreRecordatorio: string) {
         const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
         
@@ -160,8 +217,10 @@ async showToast(message: string) {
             const userData = userDoc.data();
             const recordatorios = userData?.['recordatorio'] || [];
             const recordatorio = recordatorios.find((r: { nombreRecordatorio: string; }) => r.nombreRecordatorio === nombreRecordatorio);
+            console.log("mostrar recordatorios")
             console.log(recordatorios)
             if (recordatorio) {
+              console.log("mostrar recordatorio")
               console.log(recordatorio)
               return recordatorio; // Devuelve el recordatorio encontrado
             } else {
@@ -177,4 +236,48 @@ async showToast(message: string) {
           return null;
         }
       }
+
+      async editarRecordatorio(
+        userId: string,
+        nombreRecordatorio: string,
+        nuevosDatos: { descRecordatorio: string; fechaRecordatorio: string; horaRecordatorio: string; recordar: string }
+      ) {
+        const userDocRef = doc(this.firestore, `Usuarios/${userId}`);
+        try {
+          
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            const datos = userDoc.data();
+            const recordatoriosExistentes = datos['recordatorio'] || [];
+      
+            // Encuentra el índice del recordatorio a editar
+            const index = recordatoriosExistentes.findIndex(
+              (r: any) => r.nombreRecordatorio === nombreRecordatorio
+            );
+      
+            if (index !== -1) {
+              // Actualiza los datos en el arreglo local
+              recordatoriosExistentes[index] = {
+                ...recordatoriosExistentes[index], // Mantén los datos originales
+                ...nuevosDatos, // Sobrescribe con los nuevos valores
+              };
+      
+              // Guarda los cambios en Firestore
+              await setDoc(
+                userDocRef,
+                { recordatorio: recordatoriosExistentes },
+                { merge: true } // Combina con los datos existentes
+              );
+            } else {
+              throw new Error("No se encontró el recordatorio con el nombre proporcionado.");
+            }
+          } else {
+            throw new Error("No se encontró el documento del usuario.");
+          }
+        } catch (error) {
+          console.error("Error al actualizar el recordatorio:", error);
+          throw error; // Re-lanza el error para que sea manejado en la página
+        }
+      }
+
 }

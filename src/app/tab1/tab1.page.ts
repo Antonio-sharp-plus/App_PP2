@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 
 
@@ -17,8 +17,8 @@ export class Tab1Page implements OnInit{
   constructor(
     public firestoreService: FirestoreService,
     private router: Router,
-    private alertCtrl: AlertController
-    
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) {}
   isLoading = true; // Variable para manejar el estado de carga
 
@@ -57,10 +57,18 @@ export class Tab1Page implements OnInit{
     await alert.present();
   }
 
-  eliminarRecordatorio(recordatorio : any) {
-    // Lógica para eliminar el recordatorio
+  async eliminarRecordatorio(recordatorio: any) {
     const id = this.firestoreService.idUsuarioLogueado;
-    this.firestoreService.eliminarRecordatorio(id,recordatorio);
+  
+    // Crear y mostrar el loader
+    const loader = await this.loadingCtrl.create({
+      message: "Eliminando recordatorio, por favor espere..."
+    });
+    await loader.present();
+  
+    await this.firestoreService.eliminarRecordatorio(id, recordatorio);
+
+      loader.dismiss();
   }
 
   irDetalles(nombreRecordatorio : string){
