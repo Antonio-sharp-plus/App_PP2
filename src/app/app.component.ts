@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from '../app/services/firestore.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +11,32 @@ import { Router } from '@angular/router';
 export class AppComponent {
   constructor(
     public firestoreService: FirestoreService,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController
   ) {}
 
   //Método para redirigir a la página a las listas
-  irAListas(){
+  async irAListas(){
     this.router.navigate(['/tabs/tab2'])
+    await this.menuCtrl.close(); 
   }
   //Método para cerrar sesion
-  CerrarSesion(){
+  async CerrarSesion(){
     this.firestoreService.cerrarSesion();
+    await this.menuCtrl.close(); 
   }
   // Método para redirigir a la página de Recordatorios
-  irARecordatorios() {
+  async irARecordatorios() {
     this.router.navigate(['/tabs/tab1']);
+    await this.menuCtrl.close(); 
   }
-  irCrearRecordatorio(){
+  async irCrearRecordatorio(){
     this.router.navigate(['/crear-recordatorio'])
+    await this.menuCtrl.close(); 
   }
     // Método para redirigir a la página de crear recordatorio
-  irACrearRecordatorio() {
+  async irACrearRecordatorio() {
     this.router.navigate(['./crear-recordatorio']);
+    await this.menuCtrl.close(); 
   }
 }

@@ -1,2 +1,11 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+ion-tabs {
+    background: linear-gradient(135deg, #c99969, #d9b596);
+  }
+  ion-tab-bar {
+    background: linear-gradient(135deg, #e7ded5, #d9b596);
+  }
+  ion-tab-button {
+    background: linear-gradient(135deg, #e7ded5, #d9b596);
+  }

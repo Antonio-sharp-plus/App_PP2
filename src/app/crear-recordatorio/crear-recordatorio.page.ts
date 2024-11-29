@@ -59,8 +59,7 @@ export class CrearRecordatorioPage implements OnInit {
     // Guardar el recordatorio en Firestore
     await this.firestoreService.guardarRecordatorio(id, { nombreRecordatorio, descRecordatorio, fechaRecordatorio, horaRecordatorio, recordar });
   
-    // Mostrar mensaje de éxito y navegar hacia atrás
-    this.showToast("Se guardó el recordatorio");
+    //navegar hacia atrás
     this.navCtrl.navigateBack('/tabs/tab1');
   
     // Ocultar el loader
