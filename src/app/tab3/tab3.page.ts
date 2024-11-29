@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -18,7 +18,8 @@ export class Tab3Page implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private navCtrl: NavController
   ) {}
 
   async ngOnInit() {
@@ -89,4 +90,9 @@ export class Tab3Page implements OnInit {
     this.tasks = this.tasks.filter(task => !task.completed); 
     this.taskService.updateTasks(this.listName, this.tasks); 
   }
+
+  volverAtras(){
+    this.navCtrl.navigateBack('/tabs/tab2');
+  }
+
 }

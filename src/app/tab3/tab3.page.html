@@ -1,51 +1,63 @@
 <ion-header class="ion-page" id="main-content">
   <ion-toolbar>
-    <ion-title>{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge></ion-title> 
+    <ion-title>
+      {{ listName }}
+      <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding background-contenido">
   <ion-header collapse="condense">
-    <input type="text" placeholder="Título de la lista" class="custom-input">
     <ion-toolbar>
-      <ion-title size="large">{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge></ion-title>
+      <ion-title size="large">
+        {{ listName }}
+        <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div class="contenedor-recordatorios">
-    <h3>{{ listName }} <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge> <ion-icon name="pricetag-outline"></ion-icon> </h3>
-  <div class="d-flex flex-row-reverse separador-radio">
-    <button (click)="addTask()"><ion-icon name="add-outline"></ion-icon></button>
-    <input class="contenedor-label-radio" [(ngModel)]="newTask" placeholder="Agregar Item">
+    <h3>
+      {{ listName }}
+      <ion-badge *ngFor="let tag of tags">{{ tag }}</ion-badge>
+      <ion-icon name="pricetag-outline"></ion-icon>
+    </h3>
+
+    <div class="d-flex flex-row-reverse separador-radio">
+      <button (click)="addTask()">
+        <ion-icon name="add-outline"></ion-icon>
+      </button>
+      <input class="contenedor-label-radio" [(ngModel)]="newTask" placeholder="Agregar Item" />
+    </div>
+
+    <!-- Listado de tareas con deslizables -->
+    <ion-list class="fondo">
+      <ion-item-sliding *ngFor="let task of tasks">
+        <!-- Elemento principal -->
+        <ion-item>
+          <ion-label>{{ task.name }}</ion-label>
+          <ion-checkbox class="ok" slot="end" [(ngModel)]="task.completed"></ion-checkbox>
+        </ion-item>
+
+        <!-- Opciones deslizables -->
+        <ion-item-options side="end">
+          <ion-item-option (click)="editTask(task)">Editar</ion-item-option>
+          <ion-item-option color="danger" (click)="deleteTask(task)">Eliminar</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <div class="todo">
+      <ion-label>Completar Todo</ion-label>
+      <ion-checkbox [(ngModel)]="allChecked" (ionChange)="toggleAllTasks()"></ion-checkbox>
+    </div>
   </div>
 
-  <ion-list class="fondo">
-    <ion-item-sliding *ngFor="let task of tasks">
-      <ion-item>
-        <ion-label class="contenedor-label-radio" >{{ task.name }}</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="task.completed"></ion-checkbox>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="editTask(task)">Editar</ion-item-option>
-        <ion-item-option color="danger" (click)="deleteTask(task)">Eliminar</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-
-  <div class="button-todo">
-    <ion-label>Completar Todo</ion-label>
-    <ion-checkbox [(ngModel)]="allChecked" (ionChange)="toggleAllTasks()"></ion-checkbox>
+  <div class="tones">
+    <button type="submit" class="button-guardar-cancelar" (click)="eliminarTareasSeleccionadas()">
+      Eliminar Tareas
+    </button>
+    <button type="button" class="button-guardar-cancelar" (click)="volverAtras()">Cancelar</button>
   </div>
-  <div>
-    <button type="submit" class="button-guardar-cancelar" (click)="eliminarTareasSeleccionadas()">Eliminar Tareas</button>
-  </div>
-</div>
-<div class="d-flex justify-content-around align-items-center w-100">
-  <button type="submit" class="button-guardar-cancelar">
-    Guardar
-  </button>
-  <button type="button" class="button-guardar-cancelar">
-    Cancelar
-  </button>
-</div>
 </ion-content>
