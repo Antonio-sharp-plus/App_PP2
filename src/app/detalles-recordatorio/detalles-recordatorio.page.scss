@@ -171,3 +171,16 @@
     font-size: 20px;
     margin-top: 16px;
   }
+
+  
+  .loader-contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Toma toda la altura del contenedor */
+    text-align: center;
+  }
+    ion-spinner {
+      margin-bottom: 10px; /* Espaciado entre el spinner y el texto */
+    }

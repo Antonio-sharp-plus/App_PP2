@@ -21,22 +21,26 @@ export class DetallesRecordatorioPage implements OnInit {
   };
   
   nombreRecordatorio: string = "";
+  isLoading = true; 
 
   constructor(public firestoreService: FirestoreService, private navCtrl: NavController,private activatedRoute: ActivatedRoute, private toastController: ToastController, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.isLoading = true; // Activar el loader inicialmente
+    this.activatedRoute.paramMap.subscribe(async (params) => {
       const idParam = params.get('nombreRecordatorio'); // Esto puede ser string o null
       if (idParam) {
         this.nombreRecordatorio = idParam; // Asignar solo si no es null
         console.log(this.nombreRecordatorio);
+  
+        // Llama a cargarDetalles y espera a que termine
+        await this.cargarDetalles(this.nombreRecordatorio);
       } else {
-        this.nombreRecordatorio = ''; // O asigna un valor por defecto si es null
+        this.nombreRecordatorio = ''; // Asigna un valor por defecto si es null
         console.log('El parámetro "nombreRecordatorio" no se encontró');
       }
+      this.isLoading = false; // Desactiva el loader cuando termine todo
     });
-
-    const recordatorioDetalles = this.cargarDetalles(this.nombreRecordatorio)
   }
 
   async cargarDetalles(nombreRecordatorio: string) {
